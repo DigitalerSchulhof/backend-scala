@@ -18,12 +18,12 @@ object Duration:
       minutes: Int = 0,
       seconds: Int = 0
   ): Duration =
-    val ms = lengthToMs(hours, minutes, seconds)
-    require(ms >= 0, "Duration must be positive")
+    val totalSeconds = lengthToSeconds(hours, minutes, seconds)
+    require(totalSeconds >= 0, "Duration must be positive")
 
-    new Duration(ms)
+    new Duration(totalSeconds)
 
-  private def lengthToMs(
+  private def lengthToSeconds(
       hours: Int,
       minutes: Int,
       seconds: Int
