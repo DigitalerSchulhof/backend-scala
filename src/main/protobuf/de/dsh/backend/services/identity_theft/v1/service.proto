@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package de.dsh.proto.services.identity_theft.v1;
+
+import "de/dsh/backend/services/identity_theft/v1/resources.proto";
+import "google/protobuf/field_mask.proto";
+
+service IdentityTheftService {
+  rpc ListIdentityThefts(ListIdentityTheftsRequest)
+      returns (ListIdentityTheftsResponse);
+
+  rpc GetIdentityThefts(GetIdentityTheftsRequest)
+      returns (GetIdentityTheftsResponse);
+
+  rpc CreateIdentityTheft(CreateIdentityTheftRequest)
+      returns (CreateIdentityTheftResponse);
+
+  rpc UpdateIdentityTheft(UpdateIdentityTheftRequest)
+      returns (UpdateIdentityTheftResponse);
+
+  rpc DeleteIdentityTheft(DeleteIdentityTheftRequest)
+      returns (DeleteIdentityTheftResponse);
+}
+
+message ListIdentityTheftsRequest {
+  int32 limit = 1;
+  int32 offset = 2;
+  string filter = 3;
+  string order_by = 4;
+}
+
+message ListIdentityTheftsResponse {
+  repeated IdentityTheft identity_thefts = 1;
+  Meta meta = 2;
+
+  message Meta {
+    int32 total_count = 1;
+    int32 limit = 2;
+    int32 offset = 3;
+    bool has_previous = 4;
+    bool has_next = 5;
+  }
+}
+
+message GetIdentityTheftsRequest { repeated string ids = 1; }
+
+message GetIdentityTheftsResponse {
+  repeated IdentityTheft identity_thefts = 1;
+}
+
+message CreateIdentityTheftRequest { IdentityTheft identity_theft = 1; }
+
+message CreateIdentityTheftResponse { IdentityTheft identity_theft = 1; }
+
+message UpdateIdentityTheftRequest {
+  string id = 1;
+  IdentityTheft identity_theft = 2;
+  google.protobuf.FieldMask update_mask = 3;
+  optional string if_rev = 4;
+}
+
+message UpdateIdentityTheftResponse { IdentityTheft identity_theft = 1; }
+
+message DeleteIdentityTheftRequest {
+  string id = 1;
+  optional string if_rev = 2;
+}
+
+message DeleteIdentityTheftResponse { IdentityTheft identity_theft = 1; }

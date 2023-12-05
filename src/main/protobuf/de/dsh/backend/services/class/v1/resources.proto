@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package de.dsh.proto.services.class.v1;
+
+import "google/protobuf/timestamp.proto";
+
+message Class {
+  // Output only
+  string id = 1;
+  // Output only
+  string rev = 2;
+  // Output only
+  google.protobuf.Timestamp updated_at = 3;
+  // Output only
+  google.protobuf.Timestamp created_at = 4;
+
+  string level_id = 5;
+  string name = 6;
+}

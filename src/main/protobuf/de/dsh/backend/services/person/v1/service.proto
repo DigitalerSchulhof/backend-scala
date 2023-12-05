@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package de.dsh.proto.services.person.v1;
+
+import "de/dsh/backend/services/person/v1/resources.proto";
+import "google/protobuf/field_mask.proto";
+
+service PersonService {
+  rpc ListPersons(ListPersonsRequest) returns (ListPersonsResponse);
+
+  rpc GetPersons(GetPersonsRequest) returns (GetPersonsResponse);
+
+  rpc CreatePerson(CreatePersonRequest) returns (CreatePersonResponse);
+
+  rpc UpdatePerson(UpdatePersonRequest) returns (UpdatePersonResponse);
+
+  rpc DeletePerson(DeletePersonRequest) returns (DeletePersonResponse);
+}
+
+message ListPersonsRequest {
+  int32 limit = 1;
+  int32 offset = 2;
+  string filter = 3;
+  string order_by = 4;
+}
+
+message ListPersonsResponse {
+  repeated Person persons = 1;
+  Meta meta = 2;
+
+  message Meta {
+    int32 total_count = 1;
+    int32 limit = 2;
+    int32 offset = 3;
+    bool has_previous = 4;
+    bool has_next = 5;
+  }
+}
+
+message GetPersonsRequest { repeated string ids = 1; }
+
+message GetPersonsResponse { repeated Person persons = 1; }
+
+message CreatePersonRequest { Person person = 1; }
+
+message CreatePersonResponse { Person person = 1; }
+
+message UpdatePersonRequest {
+  string id = 1;
+  Person person = 2;
+  google.protobuf.FieldMask update_mask = 3;
+  optional string if_rev = 4;
+}
+
+message UpdatePersonResponse { Person person = 1; }
+
+message DeletePersonRequest {
+  string id = 1;
+  optional string if_rev = 2;
+}
+
+message DeletePersonResponse { Person person = 1; }

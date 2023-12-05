@@ -1,0 +1,5 @@
+/.bsp/
+/.metals/
+metals.sbt
+target/
+/sbt-launch.jar

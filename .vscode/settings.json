@@ -1,0 +1,8 @@
+{
+  "files.watcherExclude": {
+    "**/target": true
+  },
+  "cSpell.words": ["Arango", "Schoolyear"],
+  "metals.showImplicitConversionsAndClasses": false,
+  "metals.showImplicitArguments": false
+}

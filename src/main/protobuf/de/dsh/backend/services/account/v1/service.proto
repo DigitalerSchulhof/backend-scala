@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package de.dsh.proto.services.account.v1;
+
+import "de/dsh/backend/services/account/v1/resources.proto";
+import "google/protobuf/field_mask.proto";
+
+service AccountService {
+  rpc ListAccounts(ListAccountsRequest) returns (ListAccountsResponse);
+
+  rpc GetAccounts(GetAccountsRequest) returns (GetAccountsResponse);
+
+  rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse);
+
+  rpc UpdateAccount(UpdateAccountRequest) returns (UpdateAccountResponse);
+
+  rpc DeleteAccount(DeleteAccountRequest) returns (DeleteAccountResponse);
+}
+
+message ListAccountsRequest {
+  int32 limit = 1;
+  int32 offset = 2;
+  string filter = 3;
+  string order_by = 4;
+}
+
+message ListAccountsResponse {
+  repeated Account accounts = 1;
+  Meta meta = 2;
+
+  message Meta {
+    int32 total_count = 1;
+    int32 limit = 2;
+    int32 offset = 3;
+    bool has_previous = 4;
+    bool has_next = 5;
+  }
+}
+
+message GetAccountsRequest { repeated string ids = 1; }
+
+message GetAccountsResponse { repeated Account accounts = 1; }
+
+message CreateAccountRequest {
+  Account account = 1;
+  optional string if_person_rev = 2;
+}
+
+message CreateAccountResponse { Account account = 1; }
+
+message UpdateAccountRequest {
+  string id = 1;
+  Account account = 2;
+  google.protobuf.FieldMask update_mask = 3;
+  optional string if_rev = 4;
+}
+
+message UpdateAccountResponse { Account account = 1; }
+
+message DeleteAccountRequest {
+  string id = 1;
+  optional string if_rev = 2;
+}
+
+message DeleteAccountResponse { Account account = 1; }

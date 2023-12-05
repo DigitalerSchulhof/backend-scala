@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package de.dsh.proto.services.course.v1;
+
+import "de/dsh/backend/services/course/v1/resources.proto";
+import "google/protobuf/field_mask.proto";
+
+service CourseService {
+  rpc ListCourses(ListCoursesRequest) returns (ListCoursesResponse);
+
+  rpc GetCourses(GetCoursesRequest) returns (GetCoursesResponse);
+
+  rpc CreateCourse(CreateCourseRequest) returns (CreateCourseResponse);
+
+  rpc UpdateCourse(UpdateCourseRequest) returns (UpdateCourseResponse);
+
+  rpc DeleteCourse(DeleteCourseRequest) returns (DeleteCourseResponse);
+}
+
+message ListCoursesRequest {
+  int32 limit = 1;
+  int32 offset = 2;
+  string filter = 3;
+  string order_by = 4;
+}
+
+message ListCoursesResponse {
+  repeated Course courses = 1;
+  Meta meta = 2;
+
+  message Meta {
+    int32 total_count = 1;
+    int32 limit = 2;
+    int32 offset = 3;
+    bool has_previous = 4;
+    bool has_next = 5;
+  }
+}
+
+message GetCoursesRequest { repeated string ids = 1; }
+
+message GetCoursesResponse { repeated Course courses = 1; }
+
+message CreateCourseRequest { Course course = 1; }
+
+message CreateCourseResponse { Course course = 1; }
+
+message UpdateCourseRequest {
+  string id = 1;
+  Course course = 2;
+  google.protobuf.FieldMask update_mask = 3;
+  optional string if_rev = 4;
+}
+
+message UpdateCourseResponse { Course course = 1; }
+
+message DeleteCourseRequest {
+  string id = 1;
+  optional string if_rev = 2;
+}
+
+message DeleteCourseResponse { Course course = 1; }

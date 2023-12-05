@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package de.dsh.proto.services.level.v1;
+
+import "de/dsh/backend/services/level/v1/resources.proto";
+import "google/protobuf/field_mask.proto";
+
+service LevelService {
+  rpc ListLevels(ListLevelsRequest) returns (ListLevelsResponse);
+
+  rpc GetLevels(GetLevelsRequest) returns (GetLevelsResponse);
+
+  rpc CreateLevel(CreateLevelRequest) returns (CreateLevelResponse);
+
+  rpc UpdateLevel(UpdateLevelRequest) returns (UpdateLevelResponse);
+
+  rpc DeleteLevel(DeleteLevelRequest) returns (DeleteLevelResponse);
+}
+
+message ListLevelsRequest {
+  int32 limit = 1;
+  int32 offset = 2;
+  string filter = 3;
+  string order_by = 4;
+}
+
+message ListLevelsResponse {
+  repeated Level levels = 1;
+  Meta meta = 2;
+
+  message Meta {
+    int32 total_count = 1;
+    int32 limit = 2;
+    int32 offset = 3;
+    bool has_previous = 4;
+    bool has_next = 5;
+  }
+}
+
+message GetLevelsRequest { repeated string ids = 1; }
+
+message GetLevelsResponse { repeated Level levels = 1; }
+
+message CreateLevelRequest { Level level = 1; }
+
+message CreateLevelResponse { Level level = 1; }
+
+message UpdateLevelRequest {
+  string id = 1;
+  Level level = 2;
+  google.protobuf.FieldMask update_mask = 3;
+  optional string if_rev = 4;
+}
+
+message UpdateLevelResponse { Level level = 1; }
+
+message DeleteLevelRequest {
+  string id = 1;
+  optional string if_rev = 2;
+}
+
+message DeleteLevelResponse { Level level = 1; }
