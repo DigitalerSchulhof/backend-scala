@@ -84,9 +84,9 @@ class AccountValidator(
     settings match
       case settings: AccountSettings =>
         aggregateValidationResult(
-          // checkDeleteAfter(settings.mailbox.deleteAfter),
-          // checkDeleteAfterInBin(settings.mailbox.deleteAfterInBin),
-          // checkSessionTimeout(settings.profile.sessionTimeout)
+          checkDeleteAfter(settings.mailbox.deleteAfter),
+          checkDeleteAfterInBin(settings.mailbox.deleteAfterInBin),
+          checkSessionTimeout(settings.profile.sessionTimeout)
         )
 
       case settings: AccountSettingsUpdate =>
